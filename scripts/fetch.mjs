@@ -41,7 +41,7 @@ if (Object.keys(fechas).length > 0) {
   ok++;
 }
 
-// Tabla de posiciones
+// Tabla de posiciones actual
 try {
   await writeFile('data/standings.json', JSON.stringify(await get(`${BASE}/v2/${L}/standings`)));
   console.log('OK standings');
@@ -58,6 +58,23 @@ if (!(await existe('data/teams.json'))) {
     ok++;
   } catch (e) {
     console.error('FALLO teams', e.message);
+  }
+}
+
+// Tablas de temporadas anteriores: se guardan una sola vez
+const hist = [
+  ['hist-2026-1.json', 'season=2026&seasontype=1'],
+  ['hist-2025-1.json', 'season=2025&seasontype=1'],
+  ['hist-2025-6.json', 'season=2025&seasontype=6'],
+  ['hist-2024.json', 'season=2024'],
+];
+for (const [archivo, q] of hist) {
+  if (await existe('data/' + archivo)) continue;
+  try {
+    await writeFile('data/' + archivo, JSON.stringify(await get(`${BASE}/v2/${L}/standings?${q}`)));
+    console.log('OK', archivo);
+  } catch (e) {
+    console.error('FALLO', archivo, e.message);
   }
 }
 
