@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Popular – Liga Profesional</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#F2F5F7;--card:#fff;--ink:#0E1621;--mute:#5B6B7C;--line:#DDE4EA;--green:#16A34A;--blue:#2F7DC0;--live:#E5484D;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1621;--card:#17212F;--ink:#F2F5F7;--mute:#8FA0B3;--line:#243244;--green:#22C55E;--blue:#75AADB;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1621;--card:#17212F;--ink:#F2F5F7;--mute:#8FA0B3;--line:#243244;--green:#22C55E;--blue:#75AADB;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.45 'DM Sans',system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{max-width:880px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+.logo{font:800 34px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.5px;border-bottom:4px solid var(--green);padding-bottom:2px}
+nav{display:flex;gap:4px;margin-left:auto}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.nav-b{padding:8px 12px;border-radius:8px;font-weight:700;color:var(--mute)}
+.nav-b[aria-current="true"]{color:var(--ink);background:var(--card)}
+.theme{width:36px;height:36px;border-radius:8px;border:1px solid var(--line)}
+main{max-width:880px;margin:0 auto;padding:16px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);font-weight:500;white-space:nowrap;color:var(--mute)}
+.chip[aria-current="true"]{background:var(--green);border-color:var(--green);color:#06210F;font-weight:700}
+.match{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:1fr 84px 1fr;align-items:center;gap:8px}
+.t{display:flex;align-items:center;gap:10px;font-weight:700;min-width:0}
+.t.away{flex-direction:row-reverse;text-align:right}
+.crest{flex:none;width:30px;height:30px;object-fit:contain}
+.mid{text-align:center}
+.score{font:800 30px/1 'Barlow Condensed',sans-serif}
+.time{font:800 24px/1 'Barlow Condensed',sans-serif;color:var(--blue)}
+.st{font-size:12px;color:var(--mute);margin-top:2px}
+.st.live{color:var(--live);font-weight:700}
+.st.live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--live);margin-right:5px;animation:p 1.2s infinite}
+@keyframes p{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.st.live::before{animation:none}}
+.dh{font-weight:700;color:var(--mute);font-size:14px;margin:18px 0 8px}
+.tv{grid-column:1/-1;border-top:1px solid var(--line);padding-top:8px;font-size:13px;color:var(--mute)}
+h2{font:800 26px/1.1 'Barlow Condensed',sans-serif;margin:4px 0 12px}
+.wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 8px;text-align:center;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--mute);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.n{text-align:left}
+td.n div{display:flex;align-items:center;gap:10px;font-weight:700}
+td.pos{width:40px;color:var(--mute);border-left:4px solid transparent}
+tr.q td.pos{border-left-color:var(--green)}
+tr.e td.pos{border-left-color:var(--blue)}
+tr.d td.pos{border-left-color:var(--live)}
+td.k{font-weight:700}
+.leg,.msg{font-size:13px;color:var(--mute);margin-top:10px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;color:var(--mute)}
+.foot{margin-top:28px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+@media (max-width:520px){.match{grid-template-columns:1fr 70px 1fr;padding:12px}.t{flex-direction:column;align-items:flex-start;gap:6px}.t.away{flex-direction:column;align-items:flex-end}.logo{font-size:28px}.nav-b{padding:8px}}
+</style>
+</head>
+<body>
+<header><div class="bar"><div class="logo">popular</div>
+<nav><button class="nav-b" id="n-p">Partidos</button><button class="nav-b" id="n-l">Liga Profesional</button></nav>
+<button class="theme" id="th" aria-label="Cambiar tema">◐</button></div></header>
+<main id="app"><p class="msg">Cargando…</p></main>
+<script>
+var TZ='America/Argentina/Buenos_Aires',S={v:'p',day:null,tab:'za'},D={},app=document.getElementById('app');
+var TABS=[['za','Zona A'],['zb','Zona B'],['fx','Fixture'],['an','Tabla anual'],['pr','Promedios']];
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function nm(t){return esc((t.shortDisplayName||t.displayName||'').trim())}
+function cr(t){var l=t.logo||(t.logos&&t.logos[0]&&t.logos[0].href)||'';return l?'<img class="crest" src="'+esc(l)+'" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'">':'<span class="crest"></span>'}
+function hoy(){return new Intl.DateTimeFormat('en-CA',{timeZone:TZ}).format(new Date()).replace(/-/g,'')}
+function ms(k){return Date.UTC(+k.slice(0,4),+k.slice(4,6)-1,+k.slice(6,8),12)}
+function lbl(k){var d=Math.round((ms(k)-ms(hoy()))/864e5),f=new Date(ms(k)).toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}),r=d==0?'Hoy':d==-1?'Ayer':d==1?'Mañana':'';return (r?r+', ':'')+f}
+function sl(e){var c=e.competitions&&e.competitions[0];if(!c)return null;var st=c.status.type,h,a;c.competitors.forEach(function(x){if(x.homeAway=='home')h=x;else a=x});if(!h||!a)return null;
+ var q=function(x){return{n:x.team.displayName,s:(x.team.shortDisplayName||'').trim(),l:x.team.logo,g:x.score}};
+ return{id:e.id,d:e.date,s:st.state,n:st.name,c:c.status.displayClock,h:q(h),a:q(a)}}
+function dk(t){return new Intl.DateTimeFormat('en-CA',{timeZone:TZ}).format(new Date(t)).replace(/-/g,'')}
+function iso(k){return k.slice(0,4)+'-'+k.slice(4,6)+'-'+k.slice(6,8)}
+function cl(t){return t.l?'<img class="crest" src="'+esc(t.l)+'" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'">':'<span class="crest"></span>'}
+function build(){var m={};((D.fx&&D.fx.eventos)||[]).forEach(function(e){m[e.id]=e});
+ Object.keys(D.sb.fechas).forEach(function(k){((D.sb.fechas[k]||{}).events||[]).forEach(function(e){var s=sl(e);if(s)m[s.id]=s})});
+ var by={};Object.keys(m).forEach(function(id){var e=m[id],k=dk(e.d);(by[k]=by[k]||[]).push(e)});D.by=by}
+function ev(e,k){var mid;
+ if(e.s=='pre'){mid='<div class="time">'+new Date(e.d).toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:TZ})+'</div>';
+  if(/POSTPONED|CANCELED|SUSPENDED|DELAYED/.test(e.n||''))mid+='<div class="st">'+(/POSTPONED/.test(e.n)?'Postergado':/CANCELED/.test(e.n)?'Cancelado':/SUSPENDED/.test(e.n)?'Suspendido':'Demorado')+'</div>'}
+ else{var live=e.s=='in',tx=live?(e.n=='STATUS_HALFTIME'?'Entretiempo':'En vivo '+esc(e.c)):'Final';
+  mid='<div class="score">'+esc(e.h.g)+' - '+esc(e.a.g)+'</div><div class="st'+(live?' live':'')+'">'+tx+'</div>'}
+ var tv=(D.tv[k]&&D.tv[k][e.h.n])||(e.s=='post'?'':'Por confirmar');
+ return '<div class="match"><div class="t">'+cl(e.h)+'<span>'+esc(e.h.s)+'</span></div><div class="mid">'+mid+'</div><div class="t away">'+cl(e.a)+'<span>'+esc(e.a.s)+'</span></div>'+(tv?'<div class="tv">Transmite: '+esc(tv)+'</div>':'')+'</div>'}
+function matches(){var ks=Object.keys(D.sb.fechas).sort(),k=S.day,all=Object.keys(D.by).sort(),nx=all.filter(function(x){return x>k})[0],
+ es=(D.by[k]||[]).slice().sort(function(a,b){return new Date(a.d)-new Date(b.d)});
+ var h='<div class="chips">'+ks.map(function(x){return '<button class="chip" data-d="'+x+'" aria-current="'+(S.day==x)+'">'+lbl(x)+'</button>'}).join('')+'</div>';
+ if(!es.length)return h+'<div class="box">No hay partidos programados para este día.'+(nx?' Próximo día con partidos: '+lbl(nx)+'.':'')+'</div>';
+ return h+es.map(function(e){return ev(e,k)}).join('')}
+function fechas(){var ks=Object.keys(D.by).sort(),out=[],cur=null,pr=0;
+ ks.forEach(function(k){var t=ms(k);if(!cur||t-pr>864e5){cur={ev:[]};out.push(cur)}cur.ev=cur.ev.concat(D.by[k]);cur.fin=k;pr=t});
+ out.forEach(function(f,i){f.ev.sort(function(a,b){return new Date(a.d)-new Date(b.d)});var n=f.ev.length;f.nom=i<16?'Fecha '+(i+1):n==8?'Octavos':n==4?'Cuartos':n==2?'Semifinales':n==1?'Final':'Playoffs'});
+ return out}
+function fixture(){if(!D.fx)return '<h2>Fixture</h2><div class="box">Falta el calendario completo (archivo data/fixture.json). Revisá que la tarea automática lo haya guardado.</div>';
+ var F=fechas();if(S.fe==null||S.fe>=F.length){var t=hoy(),i=-1;F.forEach(function(f,j){if(i<0&&f.fin>=t)i=j});S.fe=i<0?F.length-1:i}
+ var f=F[S.fe],h='<div class="chips">'+F.map(function(x,i){return '<button class="chip" data-f="'+i+'" aria-current="'+(S.fe==i)+'">'+x.nom+'</button>'}).join('')+'</div><h2>'+f.nom+'</h2>',day='';
+ f.ev.forEach(function(e){var k=dk(e.d);if(k!=day){day=k;h+='<div class="dh">'+lbl(k)+'</div>'}h+=ev(e,k)});
+ return h}
+function sts(en){var o={};en.stats.forEach(function(s){o[s.name]=s.value});o.t=en.team;return o}
+function zona(i){var g=D.st.children[i];if(!g)return '<div class="box">Sin datos para esta zona.</div>';
+ var r=g.standings.entries.map(sts).sort(function(a,b){return (a.rank||99)-(b.rank||99)||b.points-a.points});
+ var h='<h2>Zona '+'AB'[i]+'</h2><div class="wrap"><table><thead><tr><th></th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DG</th></tr></thead><tbody>';
+ r.forEach(function(x,j){h+='<tr class="'+(j<8?'q':'')+'"><td class="pos">'+(j+1)+'</td><td class="n"><div>'+cr(x.t)+nm(x.t)+'</div></td><td class="k">'+x.points+'</td><td>'+x.gamesPlayed+'</td><td>'+x.wins+'</td><td>'+x.ties+'</td><td>'+x.losses+'</td><td>'+x.pointsFor+'</td><td>'+x.pointsAgainst+'</td><td>'+(x.pointDifferential>0?'+':'')+x.pointDifferential+'</td></tr>'});
+ return h+'</tbody></table></div><p class="leg">La franja verde marca los 8 primeros de cada zona (puestos de playoffs).</p>'}
+function liga(){var h='<div class="chips">'+TABS.map(function(t){return '<button class="chip" data-t="'+t[0]+'" aria-current="'+(S.tab==t[0])+'">'+t[1]+'</button>'}).join('')+'</div>';
+ if(S.tab=='za')return h+zona(0);if(S.tab=='zb')return h+zona(1);if(S.tab=='fx')return h+fixture();
+ return h+(S.tab=='an'?anual():prom())}
+var HD='<thead><tr><th></th><th style="text-align:left">Equipo</th><th>Pts</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DG</th></tr></thead>';
+function ents(j){if(!j)return null;var a=[];(j.children||[j]).forEach(function(g){((g.standings&&g.standings.entries)||[]).forEach(function(e){a.push(sts(e))})});return a}
+function sum(srcs){var m={},K=['points','gamesPlayed','wins','ties','losses','pointsFor','pointsAgainst'];
+ srcs.forEach(function(a){a.forEach(function(x){var o=m[x.t.id]||(m[x.t.id]={t:x.t,points:0,gamesPlayed:0,wins:0,ties:0,losses:0,pointsFor:0,pointsAgainst:0});K.forEach(function(k){o[k]+=x[k]||0})})});
+ return Object.keys(m).map(function(k){var o=m[k];o.dg=o.pointsFor-o.pointsAgainst;return o})}
+function trs(r,f){return r.map(function(x,j){return '<tr class="'+f(j,r.length)+'"><td class="pos">'+(j+1)+'</td><td class="n"><div>'+cr(x.t)+nm(x.t)+'</div></td><td class="k">'+x.points+'</td><td>'+x.gamesPlayed+'</td><td>'+x.wins+'</td><td>'+x.ties+'</td><td>'+x.losses+'</td><td>'+x.pointsFor+'</td><td>'+x.pointsAgainst+'</td><td>'+(x.dg>0?'+':'')+x.dg+'</td></tr>'}).join('')}
+function anual(){var a=ents(D.h&&D.h['2026-1']);
+ if(!a)return '<h2>Tabla anual</h2><div class="box">Todavía no están los datos del Apertura 2026 (archivo data/hist-2026-1.json).</div>';
+ var r=sum([a,ents(D.st)]).sort(function(x,y){return y.points-x.points||y.dg-x.dg||y.pointsFor-x.pointsFor});
+ return '<h2>Tabla anual</h2><div class="wrap"><table>'+HD+'<tbody>'+trs(r,function(j,n){return j<3?'q':j<9?'e':j==n-1?'d':''})+'</tbody></table></div><p class="leg">Suma de Apertura y Clausura 2026. Verde: 1.º a 3.º (Libertadores). Celeste: 4.º a 9.º (Sudamericana). Rojo: último, desciende. Es orientativo: los cupos pueden correrse si un campeón de torneo ya clasificó por otra vía.</p>'}
+// Copa de la Liga 2024, fase de grupos (ID de equipo en ESPN: [puntos, partidos]). Fuente: AFA vía Wikipedia.
+var COPA24={'16':[27,14,16],'3':[26,14,11],'10060':[26,14,5],'21':[25,14,1],'19':[24,14,8],'11':[23,14,4],'2975':[17,14,1],'235':[17,14,-1],'10':[16,14,0],'9':[16,14,-5],'17':[15,14,-8],'17702':[13,14,-8],'9785':[10,14,-15],'9744':[8,14,-12],'8':[27,14,10],'8950':[26,14,4],'5':[25,14,8],'15':[24,14,13],'12':[23,14,6],'14':[21,14,-2],'20':[20,14,2],'7764':[18,14,-4],'18':[16,14,-4],'4':[14,14,-2],'11989':[11,14,-10],'10158':[9,14,-10],'7767':[5,14,-18]};
+function prom(){var H=D.h||{},c=ents(D.st);
+ if(!H['2024']||!H['2025-1']||!H['2025-6']||!H['2026-1'])return '<h2>Promedios</h2><div class="box">Faltan datos históricos en la carpeta data (hist-2024, hist-2025-1, hist-2025-6 y hist-2026-1).</div>';
+ var m={};
+ [[ents(H['2024']),'a'],[ents(H['2025-1']).concat(ents(H['2025-6'])),'b'],[ents(H['2026-1']).concat(c),'c']].forEach(function(p){p[0].forEach(function(x){var o=m[x.t.id]||(m[x.t.id]={t:x.t,a:0,b:0,c:0,pj:0,dg:0});o[p[1]]+=x.points;o.pj+=x.gamesPlayed;o.dg+=x.pointDifferential||0})});
+ var cm={};c.forEach(function(x){cm[x.t.id]=x.t});
+ Object.keys(COPA24).forEach(function(id){if(!cm[id])return;var o=m[id]||(m[id]={t:cm[id],a:0,b:0,c:0,pj:0,dg:0});o.a+=COPA24[id][0];o.pj+=COPA24[id][1];o.dg+=COPA24[id][2]});
+ var r=c.map(function(x){var o=m[x.t.id];o.tot=o.a+o.b+o.c;o.pm=o.pj?o.tot/o.pj:0;return o}).sort(function(x,y){var P={'17':1,'10158':1};return (Math.round(y.pm*1000)-Math.round(x.pm*1000))||((P[y.t.id]||0)-(P[x.t.id]||0))||(y.dg-x.dg)});
+ var h='<h2>Promedios</h2><div class="wrap"><table><thead><tr><th></th><th style="text-align:left">Equipo</th><th>2024</th><th>2025</th><th>2026</th><th>Total</th><th>PJ</th><th>Prom.</th></tr></thead><tbody>';
+ r.forEach(function(x,j){h+='<tr class="'+(j==r.length-1?'d':'')+'"><td class="pos">'+(j+1)+'</td><td class="n"><div>'+cr(x.t)+nm(x.t)+'</div></td><td>'+x.a+'</td><td>'+x.b+'</td><td>'+x.c+'</td><td>'+x.tot+'</td><td>'+x.pj+'</td><td class="k">'+x.pm.toFixed(3)+'</td></tr>'});
+ return h+'</tbody></table></div><p class="leg">Promedio = puntos totales ÷ partidos jugados. Los puntos de 2024 incluyen la Copa de la Liga y el Campeonato; los de 2025 y 2026, Apertura y Clausura (sin playoffs). Rojo: zona de descenso por promedio (1 equipo). Los empates en el promedio (con 3 decimales) se resuelven por diferencia de gol. Los equipos con menos temporadas se calculan solo con los partidos que jugaron en Primera.</p>'}
+function upd(){var m=Math.max(0,Math.round((Date.now()-new Date(D.sb.actualizado))/6e4));return 'Datos de ESPN, actualizados hace '+(m<60?m+' min':Math.floor(m/60)+' h')+'. Pueden tardar unos minutos en reflejar los cambios.'}
+function draw(){var p=S.v=='p';document.getElementById('n-p').setAttribute('aria-current',p);document.getElementById('n-l').setAttribute('aria-current',!p);
+ app.innerHTML=(p?matches():liga())+'<p class="foot">'+upd()+'</p>';var c=app.querySelector('.chip[aria-current="true"]');if(c&&c.scrollIntoView)c.scrollIntoView({inline:'center',block:'nearest'})}
+function get(u){return fetch(u,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})}
+var HK=['2026-1','2025-1','2025-6','2024'];
+function load(){var hh=D.h?[]:HK.map(function(k){return get('data/hist-'+k+'.json').catch(function(){return null})});
+ return Promise.all([get('data/scoreboard.json'),get('data/standings.json'),get('data/canales.json').catch(function(){return{}}),get('data/fixture.json').catch(function(){return null})].concat(hh)).then(function(r){
+ var nuevo=!D.sb||D.sb.actualizado!==r[0].actualizado||!D.h;D.sb=r[0];D.st=r[1];D.tv=r[2];D.fx=r[3];
+ if(!D.h){D.h={};HK.forEach(function(k,i){D.h[k]=r[4+i]})}
+ build();
+ if(!S.day){var ks=Object.keys(D.sb.fechas).sort(),t=hoy();S.day=ks.indexOf(t)>-1?t:ks[ks.length-1]}
+ if(nuevo)draw()}).catch(function(){if(!D.sb)app.innerHTML='<div class="box">No pudimos cargar los datos. Probá de nuevo en unos minutos.</div>'})}
+document.getElementById('n-p').onclick=function(){S.v='p';if(D.sb)draw()};
+document.getElementById('n-l').onclick=function(){S.v='l';if(D.sb)draw()};
+app.onclick=function(e){var b=e.target.closest('[data-d],[data-t],[data-f]');if(!b)return;if(b.dataset.d)S.day=b.dataset.d;if(b.dataset.t)S.tab=b.dataset.t;if(b.dataset.f)S.fe=+b.dataset.f;draw()};
+var root=document.documentElement;root.setAttribute('data-theme','dark');
+document.getElementById('th').onclick=function(){root.setAttribute('data-theme',root.getAttribute('data-theme')=='dark'?'light':'dark')};
+load();setInterval(function(){if(!document.hidden)load()},60000);
+</script>
+</body>
+</html>
